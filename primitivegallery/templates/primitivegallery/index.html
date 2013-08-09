@@ -1,0 +1,75 @@
+{% load static from staticfiles %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="{% static "primitivegallery/css/style.css" %}" />
+</head>
+<body>
+<div id="nav">
+  <div id="breadcrumbs">
+    <a href="{% url 'primitivegallery.views.list' size=size %}">/gallery</a>{% for b in breadcrumbs%}/<a href="{% url 'primitivegallery.views.list' size=size subfolder=b.path %}">{{ b.name }}</a>{% endfor %}
+  </div>
+  <div id="size">
+    <a href="{% url 'primitivegallery.views.list' size='thumbnails' subfolder=subfolder %}">Thumbnails</a>
+    <a href="{% url 'primitivegallery.views.list' size='small' subfolder=subfolder %}">Small</a>
+    <a href="{% url 'primitivegallery.views.list' size='medium' subfolder=subfolder %}">Medium</a>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<div id="primitivegallery">
+{% for file in filelist.object_list %}
+{% if file.isfile %}
+    {% spaceless %}
+  <a class="image {{ size }}" href="{{ file.url }}">
+    {% ifequal size 'thumbnails' %}
+        <img src="{{ file.thumbnail }}" />
+    {% endifequal %}
+    {% ifequal size 'small' %}
+        <img src="{{ file.small }}" />
+    {% endifequal %}
+    {% ifequal size 'medium' %}
+        <img src="{{ file.medium }}" />
+    {% endifequal %}
+  </a>
+    {% endspaceless %}
+{% else %}
+    {% spaceless %}
+    <a class="folder {{ size }}" href="/{{ size }}/{{ file.url }}/">
+    {% ifequal size 'thumbnails' %}
+        <img src="{{ file.thumbnail }}" />
+    {% endifequal %}
+    {% ifequal size 'small' %}
+        <img src="{{ file.small }}" />
+    {% endifequal %}
+    {% ifequal size 'medium' %}
+        <img src="{{ file.medium }}" />
+    {% endifequal %}
+  <p>{{ file.name|title }}<br />
+  {% if file.imgcount > 0 %}{{ file.imgcount }} images<br />{% endif %}
+  {% if file.dircount > 0 %}{{ file.dircount }} galleries{% endif %}</p>
+    </a>
+    {% endspaceless %}
+{% endif %}
+{% endfor %}
+</div>
+
+<div class="clear"></div>
+
+<div class="footer">
+    {% if filelist.has_previous %}
+        <a href="?page={{ filelist.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">
+        Page {{ filelist.number }} of {{ filelist.paginator.num_pages }}.
+    </span>
+
+    {% if filelist.has_next %}
+        <a href="?page={{ filelist.next_page_number }}">next</a>
+    {% endif %}
+</div>
+</body>
+</html>

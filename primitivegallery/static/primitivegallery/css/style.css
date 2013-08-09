@@ -1,0 +1,27 @@
+body, html { margin: 0; font: 13px Helvetica, Arial, sans-serif; }
+#nav { width: auto; background: #eee; height: 20px; padding: 10px; }
+#nav a { text-decoration: none; color: #000; }
+#nav #breadcrumbs { float: left; }
+#nav #size { float: right; }
+
+#imagegrid { padding: 10px; }
+.folder { display: block; float: left; background: #222; margin: 2px; padding:0; position: relative; }
+a.folder { text-decoration: none; color: #fff; }
+
+.folder.thumbnails { width: 200px; }
+.folder.thumbnails p { display: block;  position: absolute; top: 0px; left: 50%; margin: 10px; width: 80px; }
+.folder.small p { position: absolute; bottom: 0px; left: 0px; padding: 10px; margin: 0; background: #111; color: #fff; width: 460px; }
+.folder.medium p { position: absolute; bottom: 0px; left: 0px; padding: 10px; margin: 0; background: #111; color: #fff; width: 880px; }
+
+.image { display: inline-block; margin: 2px; float: left; text-align: center; background: #111; }
+.image.small { line-height: 317px; }
+.image.medium { line-height: 597px; }
+.image img { vertical-align: middle; }
+.thumbnails { width: 100px; height: 100px; }
+.small { width: 480px; height: 320px;}
+.medium { width: 900px; height: 600px; }
+
+.footer { margin-top: 20px; width: auto; background: #eee; height: 20px; padding: 10px; }
+
+.clear { width: 100%; clear: both; height: 0; }
+a img { border: 0; }
