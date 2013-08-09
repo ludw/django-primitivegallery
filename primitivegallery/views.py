@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 
 def list(request, size='thumbnails', subfolder=''):
-    pagesize = {'thumbnails': 150, 'small': 40, 'medium': 20}
+    pagesize = {'thumbnails': 250, 'small': 100, 'medium': 50}
 
     all_items = Directory(subfolder).list()
     p = Paginator(all_items, pagesize[size])
