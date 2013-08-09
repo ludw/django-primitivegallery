@@ -6,6 +6,7 @@ from django.db import models
 from os.path import basename, dirname, exists, isfile, join
 from PIL.ExifTags import TAGS
 from PIL.Image import open
+from django.utils import timezone
 
 
 class Image(models.Model):
@@ -89,7 +90,7 @@ class Image(models.Model):
     def taken(self):
         if self.datetaken:
             return self.datetaken
-        return datetime.now()
+        return timezone.now()
 
     def exiftaken(self):
         i = open(self.local())
@@ -99,7 +100,7 @@ class Image(models.Model):
                 decoded = TAGS.get(tag, tag)
                 if decoded == 'DateTimeOriginal':
                     return datetime.strptime(value, '%Y:%m:%d %H:%M:%S')
-        return datetime.now()
+        return timezone.now()
 
     def __unicode__(self):
         return self.path
@@ -163,7 +164,7 @@ class Directory:
                 folder = {'isfile': False,
                           'name': name,
                           'url': path,
-                          'taken': datetime.now(),
+                          'taken': timezone.now(),
                           }
                 i = self.get_image(localpath, path)
                 if i:
