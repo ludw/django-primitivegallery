@@ -2,9 +2,10 @@ body, html { margin: 0; font: 13px Helvetica, Arial, sans-serif; }
 #nav { width: auto; background: #eee; height: 20px; padding: 10px; }
 #nav a { text-decoration: none; color: #000; }
 #nav #breadcrumbs { float: left; }
+#nav #slideshowlink { position: absolute; left: 50%; width: 200px; margin-left: -100px; top: 10px; }
 #nav #size { float: right; }
 
-#imagegrid { padding: 10px; }
+#primitivegallery { padding: 10px; }
 .folder { display: block; float: left; background: #222; margin: 2px; padding:0; position: relative; }
 a.folder { text-decoration: none; color: #fff; }
 
@@ -20,6 +21,11 @@ a.folder { text-decoration: none; color: #fff; }
 .thumbnails { width: 100px; height: 100px; }
 .small { width: 480px; height: 320px;}
 .medium { width: 900px; height: 600px; }
+
+
+#slideshow { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #000; text-align: center; vertical-align: center; }
+#slideshow img { max-width: 100%; max-height: 100%; }
+#cache { position: absolute; left: -9999px; top: -9999px; visibility: hidden; }
 
 .footer { margin-top: 20px; width: auto; background: #eee; height: 20px; padding: 10px; }
 

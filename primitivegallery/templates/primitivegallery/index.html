@@ -1,15 +1,12 @@
-{% load static from staticfiles %}
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <link rel="stylesheet" href="{% static "primitivegallery/css/style.css" %}" />
-</head>
-<body>
+{% extends "primitivegallery/base.html" %}
+
+{% block content %}
 <div id="nav">
   <div id="breadcrumbs">
     <a href="{% url 'primitivegallery.views.list' size=size %}">/gallery</a>{% for b in breadcrumbs%}/<a href="{% url 'primitivegallery.views.list' size=size subfolder=b.path %}">{{ b.name }}</a>{% endfor %}
+  </div>
+  <div id="slideshowlink">
+      <a href="{% url 'slideshow' subfolder %}">Slideshow</a>
   </div>
   <div id="size">
     <a href="{% url 'primitivegallery.views.list' size='thumbnails' subfolder=subfolder %}">Thumbnails</a>
@@ -23,7 +20,7 @@
 {% for file in filelist.object_list %}
 {% if file.isfile %}
     {% spaceless %}
-  <a class="image {{ size }}" href="{{ file.url }}">
+    <a class="image {{ size }}" href="{% url 'slideshow' file.dir %}?start={{ file.id }}">
     {% ifequal size 'thumbnails' %}
         <img src="{{ file.thumbnail }}" />
     {% endifequal %}
@@ -71,5 +68,4 @@
         <a href="?page={{ filelist.next_page_number }}">next</a>
     {% endif %}
 </div>
-</body>
-</html>
+{% endblock %}

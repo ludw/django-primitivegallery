@@ -1,0 +1,53 @@
+{% extends "primitivegallery/base.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+    var oldindex = {{ index }};
+var index = {{ index }};
+function loadimage() {
+    $.ajax("{% url 'api_list' subfolder %}?index=" + index, {
+        'success': function(data) {
+            $('#cache').html('');
+            $.each(data.images, function(index, src) {
+                var img = $('<img />');
+                img.attr('src', src);
+                $('#cache').append(img);
+            });
+            var anchor = $('<a></a>');
+            var img = $('<img />');
+            anchor.attr('href', data.image);
+            img.attr('src', data.image);
+            anchor.append(img);
+            $('#slideshow').html(anchor);
+            oldindex = index;
+        },
+        'error': function() {
+            index = oldindex;
+        }
+    });
+    console.log(index);
+}
+
+$(function() {
+    loadimage(0);
+    $(window).on('keydown', function(e) {
+        if(e.keyCode == 39) {
+            index++;
+            loadimage();
+        }
+        if(e.keyCode == 37) {
+            if(index == 0) return;
+            index--;
+            loadimage();
+        }
+    });
+});
+</script>
+
+<div id="slideshow"></div>
+<div id="cache"></div>
+
+{% endblock %}

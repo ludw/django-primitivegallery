@@ -28,8 +28,11 @@ class Image(models.Model):
         path = join(settings.PRIMITIVE_GALLERY['IMAGE_URL'], self.dir(), file)
         if exists(self.local(size)):
             return path
-        self.status = 0
-        self.save()
+        if self.status != 0:
+            self.status = 0
+            self.save()
+        if not exists(self.path):
+            self.delete()
         return join(settings.STATIC_URL, 'primitivegallery/img/placeholder_' + size + '.png')
 
     def local(self, size=''):
@@ -158,6 +161,8 @@ class Directory:
                             'small': i.url('small'),
                             'thumbnail': i.url('thumb'),
                             'taken': i.taken(),
+                            'dir': i.dir(),
+                            'id': i.pk,
                             })
             else:
                 name = file.replace('_', ' ')
