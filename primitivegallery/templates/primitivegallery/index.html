@@ -6,7 +6,7 @@
     <a href="{% url 'primitivegallery.views.list' size=size %}">/gallery</a>{% for b in breadcrumbs%}/<a href="{% url 'primitivegallery.views.list' size=size subfolder=b.path %}">{{ b.name }}</a>{% endfor %}
   </div>
   <div id="slideshowlink">
-      <a href="{% url 'slideshow' subfolder %}">Slideshow</a>
+      <a href="{% url 'slideshow' size subfolder %}">Slideshow</a>
   </div>
   <div id="size">
     <a href="{% url 'primitivegallery.views.list' size='thumbnails' subfolder=subfolder %}">Thumbnails</a>
@@ -20,7 +20,7 @@
 {% for file in filelist.object_list %}
 {% if file.isfile %}
     {% spaceless %}
-    <a class="image {{ size }}" href="{% url 'slideshow' file.dir %}?start={{ file.id }}">
+    <a class="image {{ size }}" href="{% url 'slideshow' size file.dir %}?start={{ file.id }}">
     {% ifequal size 'thumbnails' %}
         <img src="{{ file.thumbnail }}" />
     {% endifequal %}

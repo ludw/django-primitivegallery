@@ -36,7 +36,7 @@ def list(request, size='thumbnails', subfolder=''):
     })
 
 
-def slideshow(request, subfolder=''):
+def slideshow(request, size='thumbnails', subfolder=''):
     index = 0
     try:
         startid = int(request.GET.get('start'))
@@ -48,6 +48,7 @@ def slideshow(request, subfolder=''):
         pass
     return render_to_response('primitivegallery/slideshow.html', {
         'subfolder': subfolder,
+        'size': size,
         'index': index,
     })
 
@@ -75,9 +76,16 @@ def api_list(request, size='thumbnails', subfolder=''):
     except:
         index = 0
 
+    if 'random' in request.GET and request.GET['random'].lower() == 'true':
+        order = '?'
+        index = 0
+    else:
+        order = 'datetaken'
+
     try:
-        items = Image.objects.filter(path__startswith=subfolder, status__gt=0).order_by('datetaken')[max(index - 2, 0):index + 3]
-        item = Image.objects.filter(path__startswith=subfolder, status__gt=0).order_by('datetaken')[index]
+        allitems = Image.objects.filter(path__startswith=subfolder, status__gt=0).order_by(order)
+        items = allitems[max(index - 2, 0):index + 3]
+        item = allitems[index]
     except IndexError:
         raise Http404
 

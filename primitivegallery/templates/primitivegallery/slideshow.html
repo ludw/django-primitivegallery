@@ -1,21 +1,28 @@
 {% extends "primitivegallery/base.html" %}
+{% load static from staticfiles %}
 
 {% block content %}
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <script type="text/javascript">
-    var oldindex = {{ index }};
+var oldindex = {{ index }};
 var index = {{ index }};
+var random = false;
+var auto = false;
+var autointerval = 4000;
+var controls_hide_timer_id = null;
 function loadimage() {
-    $.ajax("{% url 'api_list' subfolder %}?index=" + index, {
+    $.ajax("{% url 'api_list' subfolder %}?index=" + index + '&random=' + random, {
         'success': function(data) {
             $('#cache').html('');
-            $.each(data.images, function(index, src) {
-                var img = $('<img />');
-                img.attr('src', src);
-                $('#cache').append(img);
-            });
+            if(random == false) {
+                $.each(data.images, function(index, src) {
+                    var img = $('<img />');
+                    img.attr('src', src);
+                    $('#cache').append(img);
+                });
+            }
             var anchor = $('<a></a>');
             var img = $('<img />');
             anchor.attr('href', data.image);
@@ -25,14 +32,34 @@ function loadimage() {
             oldindex = index;
         },
         'error': function() {
-            index = oldindex;
+            index = 0;
+            loadimage();
         }
     });
-    console.log(index);
+}
+
+function update_buttonstate() {
+    if(auto) {
+        $('#auto img').attr('src', '{% static "primitivegallery/img/play_white.png" %}');
+    } else {
+        $('#auto img').attr('src', '{% static "primitivegallery/img/play_grey.png" %}');
+    }
+    if(random) {
+        $('#random img').attr('src', '{% static "primitivegallery/img/shuffle_white.png" %}');
+    } else {
+        $('#random img').attr('src', '{% static "primitivegallery/img/shuffle_grey.png" %}');
+    }
 }
 
 $(function() {
-    loadimage(0);
+    loadimage();
+    update_buttonstate();
+    setInterval(function() {
+        if(auto) {
+            index++;
+            loadimage();
+        }
+    }, autointerval);
     $(window).on('keydown', function(e) {
         if(e.keyCode == 39) {
             index++;
@@ -44,10 +71,30 @@ $(function() {
             loadimage();
         }
     });
+    $('#auto').on('click', function() {
+        auto = !auto;
+        update_buttonstate();
+    });
+    $('#random').on('click', function() {
+        random = !random;
+        update_buttonstate();
+    });
+    $(window).on('mousemove', function() {
+        $('#slideshownav').show();
+        clearTimeout(controls_hide_timer_id);
+        controls_hide_timer_id = setTimeout(function() {
+            $('#slideshownav').fadeOut();
+        }, 3000);
+    });
 });
 </script>
 
 <div id="slideshow"></div>
+<div id="slideshownav">
+    <a href="{% url 'primitivegallery.views.list' size=size subfolder=subfolder %}" id="back"><img src="{% static "primitivegallery/img/back_white.png" %}" /></a>
+    <a href="#" id="auto"><img src="" /></a>
+    <a href="#" id="random"><img src="" /></a>
+</div>
 <div id="cache"></div>
 
 {% endblock %}
