@@ -58,7 +58,7 @@ if sys.argv[-1] == 'publish':
     print("  git push --tags")
     sys.exit()
 
-LONG_DESCRIPTION = open('README.md').read()
+LONG_DESCRIPTION = open('README.rst').read()
 
 setup(
     name='django-primitivegallery',
@@ -73,7 +73,6 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: JavaScript",
         "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.3",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -82,6 +81,7 @@ setup(
     author=author,
     author_email='ludvigw@gmail.com',
     license='MIT',
+    url='https://github.com/ludw/django-primitivegallery',
     packages=get_packages('primitivegallery'),
     include_package_data=True,
     install_requires=[
@@ -90,9 +90,3 @@ setup(
     ],
     zip_safe=False,
 )
-
-# (*) Please direct queries to Github issue list, rather than to me directly
-#     Doing so helps ensure your question is helpful to other users.
-#     Queries directly to my email are likely to receive a canned response.
-#
-#     Many thanks for your understanding.
