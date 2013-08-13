@@ -13,7 +13,14 @@ var auto = false;
 var autointerval = 4000;
 var controls_hide_timer_id = null;
 function loadimage() {
-    $.ajax("{% url 'api_list' subfolder %}?index=" + index + '&random=' + random, {
+    var viewport_width = $(document).width();
+    var size = '';
+    if(viewport_width <= 900 && viewport_width > 480) {
+        size = 'medium';
+    } else if (viewport_width <= 480) {
+        size = 'small';
+    }
+    $.ajax("{% url 'api_list' subfolder %}?index=" + index + '&random=' + random + '&size=' + size, {
         'success': function(data) {
             $('#cache').html('');
             if(random == false) {
@@ -69,6 +76,10 @@ $(function() {
             if(index == 0) return;
             index--;
             loadimage();
+        }
+        if(e.keyCode == 27) {
+            console.log('adsa');
+            window.location = $('#back').attr('href');
         }
     });
     $('#auto').on('click', function() {

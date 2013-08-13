@@ -2,7 +2,7 @@ body, html { margin: 0; font: 13px Helvetica, Arial, sans-serif; }
 #nav { width: auto; background: #eee; height: 20px; padding: 10px; }
 #nav a { text-decoration: none; color: #000; }
 #nav #breadcrumbs { float: left; }
-#nav #slideshowlink { position: absolute; left: 50%; width: 200px; margin-left: -100px; top: 10px; }
+#nav #slideshowlink { position: absolute; left: 50%; width: 200px; margin-left: -100px; top: 10px; text-align: center; }
 #nav #size { float: right; }
 
 #primitivegallery { padding: 10px; }

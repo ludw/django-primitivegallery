@@ -1,8 +1,9 @@
+{% load primitivegallery_extras %}
 {
     "images": [
     {% for item in items %}
-        "{{ item.url }}"{% if not forloop.last %},{% endif %}
+        "{{ item|imageurl:size }}"{% if not forloop.last %},{% endif %}
     {% endfor %}
     ],
-    "image": "{{ item.url }}"
+    "image": "{{ item|imageurl:size }}"
 }
