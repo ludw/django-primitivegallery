@@ -31,7 +31,8 @@ class Image(models.Model):
         if self.status != 0:
             self.status = 0
             self.save()
-        if not exists(self.path):
+        if not exists(self.local()):
+            print self.path
             self.delete()
         return join(settings.STATIC_URL, 'primitivegallery/img/placeholder_' + size + '.png')
 
@@ -67,7 +68,10 @@ class Image(models.Model):
             if retcode > 0:
                 self.status = 2
 
-        self.datetaken = self.exiftaken()
+        try:
+            self.datetaken = self.exiftaken()
+        except IOError:
+            pass
         self.save()
 
     def _autorot(self, infile):
