@@ -75,6 +75,10 @@ def api_list(request, size='thumbnails', subfolder=''):
         index = int(request.GET.get('index'))
     except:
         index = 0
+    
+    size = request.GET.get('size', '')
+    if not size in ['medium', 'small']:
+        size = ''
 
     if 'random' in request.GET and request.GET['random'].lower() == 'true':
         order = '?'
@@ -92,4 +96,5 @@ def api_list(request, size='thumbnails', subfolder=''):
     return render_to_response('primitivegallery/api_list.json', {
         'items': items,
         'item': item,
+        'size': size,
     }, content_type='application/json')
