@@ -25,6 +25,7 @@ Installation
 #. Add the following settings:
 
 ::
+
   PRIMITIVE_GALLERY = {
       'IMAGE_ROOT': os.path.join(BASE_DIR, 'images'),
       'IMAGE_URL': '/static/'
@@ -35,4 +36,5 @@ Where ``IMAGE_ROOT`` is the path to your images on disk and ``IMAGE_URL`` are th
 #. Import the primitivegallery urls on some path in your urls.py file:
 
 ::
+
   url(r'^', include('primitivegallery.urls')),
