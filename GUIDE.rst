@@ -39,17 +39,17 @@ In a reasonable path where you want the gallery, issue the following command::
 
   django-admin startproject gallery
 
-This will create a folder named gallery with an inner folder also named gallery. This inner folder contains a settings file and a file that routes urls. Copy these files (``settings.py`` and ``urls.py``) from the example project_ into the inner gallery folder.
+This will create a folder named gallery with an inner folder also named gallery. This inner folder contains a settings file and a file that routes urls. Copy these files (``settings.py`` and ``urls.py``) from the example_ into the inner gallery folder.
 
-.. _example project: https://github.com/ludw/django-primitivegallery/tree/master/example/example
+.. _example: https://github.com/ludw/django-primitivegallery/tree/master/example/example
 
 Edit the file settings.py and make the following changes:
 
 - Change the value of ``SECRET_KEY`` to something random and reasonably long (~50 characters).
 
-- Turn off DEBUG mode by changing ``DEBUG`` to ``False``
+- Turn off debug mode by changing ``DEBUG`` to ``False``
 
-- Add the hostname the gallery will be hosted on to ALLOWED_HOSTS
+- Add the hostname the gallery will be hosted on to ``ALLOWED_HOSTS``
 
 - Make sure the ``IMAGE_ROOT`` is correct and points to where your images are
 
