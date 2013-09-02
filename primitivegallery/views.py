@@ -88,7 +88,7 @@ def api_list(request, size='thumbnails', subfolder=''):
 
     try:
         allitems = Image.objects.filter(path__startswith=subfolder, status__gt=0).order_by(order)
-        items = allitems[max(index - 2, 0):index + 3]
+        items = allitems[max(index - 1, 0):index + 3]
         item = allitems[index]
     except IndexError:
         raise Http404

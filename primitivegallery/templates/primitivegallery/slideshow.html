@@ -22,7 +22,14 @@ function loadimage() {
     }
     $.ajax("{% url 'api_list' subfolder %}?index=" + index + '&random=' + random + '&size=' + size, {
         'success': function(data) {
-            $('#cache').html('');
+            var anchor = $('<a></a>');
+            var img = $('<img />');
+            anchor.attr('href', data.image);
+            img.attr('src', data.image);
+            anchor.append(img);
+            $('#slideshow').html(anchor);
+            
+			$('#cache').html('');
             if(random == false) {
                 $.each(data.images, function(index, src) {
                     var img = $('<img />');
@@ -30,12 +37,7 @@ function loadimage() {
                     $('#cache').append(img);
                 });
             }
-            var anchor = $('<a></a>');
-            var img = $('<img />');
-            anchor.attr('href', data.image);
-            img.attr('src', data.image);
-            anchor.append(img);
-            $('#slideshow').html(anchor);
+
             oldindex = index;
         },
         'error': function() {
