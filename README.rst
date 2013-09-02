@@ -18,11 +18,11 @@ The following packages must be installed:
 
 Installation
 ------------
-#. Make sure the requirements above are installed. The first two can be installed with pip, the rest can be found in apt-get if you are using a debian based system.
+1. Make sure the requirements above are installed. The first two can be installed with pip, the rest can be found in apt-get if you are using a debian based system.
 
-#. Add ``primitivegallery`` to your ``INSTALLED_APPS``
+2. Add ``primitivegallery`` to your ``INSTALLED_APPS``
 
-#. Add the following settings:
+3. Add the following settings:
 
 ::
 
@@ -33,7 +33,7 @@ Installation
 
 Where ``IMAGE_ROOT`` is the path to your images on disk and ``IMAGE_URL`` are the path the webserver serves them on.
 
-#. Import the primitivegallery urls on some path in your urls.py file:
+4. Import the primitivegallery urls on some path in your urls.py file:
 
 ::
 
