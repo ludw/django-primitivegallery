@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 from os.path import basename, dirname, exists, isfile, join
 from PIL.ExifTags import TAGS
-from PIL.Image import open, AttributeError
+from PIL.Image import open
 from django.utils import timezone
 
 
