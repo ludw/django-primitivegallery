@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 from os.path import basename, dirname, exists, isfile, join
 from PIL.ExifTags import TAGS
-from PIL.Image import open
+from PIL.Image import open, AttributeError
 from django.utils import timezone
 
 
@@ -70,7 +70,7 @@ class Image(models.Model):
 
         try:
             self.datetaken = self.exiftaken()
-        except IOError:
+        except (IOError, AttributeError):
             pass
         self.save()
 
