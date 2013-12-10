@@ -23,7 +23,7 @@ class Image(models.Model):
             ret = '.' + size + '_' + basename(self.path)
 
             if self.is_video(ret):
-                ret += '.gif'
+                ret += '.jpg'
 
             return ret
 
@@ -119,11 +119,10 @@ class Image(models.Model):
         return subprocess.call([
             'ffmpeg',
             '-i', infile,
+            '-vframes', '1',
+            '-an',
             '-s', size,
-            '-t', '8',
-            '-r', '0.5',
-            '-pix_fmt', 'rgb24',
-            '-vf', 'format=rgb8',
+            '-ss', '1',
             outfile
         ])
 
