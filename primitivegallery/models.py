@@ -22,8 +22,8 @@ class Image(models.Model):
         if size:
             ret = '.' + size + '_' + basename(self.path)
 
-            if self.is_video():
-                ret += '.jpg'
+            if self.is_video(ret):
+                ret += '.gif'
 
             return ret
 
@@ -49,8 +49,10 @@ class Image(models.Model):
         file = self.name(size)
         return join(settings.PRIMITIVE_GALLERY['IMAGE_ROOT'], self.dir(), file)
 
-    def is_video(self):
-        ext = os.path.splitext(self.path)[1]
+    def is_video(self, path=None):
+        if path is None:
+            path = self.path
+        ext = os.path.splitext(path)[1]
         return ext in VIDEO_EXTS
 
     def process(self):
@@ -91,7 +93,7 @@ class Image(models.Model):
         return subprocess.call(["jhead", '-autorot', infile])
 
     def _create_thumbnail(self, infile, outfile, size):
-        if self.is_video():
+        if self.is_video(infile):
             return self._create_videothumb(infile, outfile, size)
 
         return subprocess.call([
@@ -103,7 +105,7 @@ class Image(models.Model):
         ])
 
     def _create_resized(self, infile, outfile, size):
-        if self.is_video():
+        if self.is_video(infile):
             return self._create_videothumb(infile, outfile, size)
 
         return subprocess.call([
@@ -117,10 +119,11 @@ class Image(models.Model):
         return subprocess.call([
             'ffmpeg',
             '-i', infile,
-            '-vframes', '1',
-            '-an',
             '-s', size,
-            '-ss', '1',
+            '-t', '8',
+            '-r', '0.5',
+            '-pix_fmt', 'rgb24',
+            '-vf', 'format=rgb8',
             outfile
         ])
 
