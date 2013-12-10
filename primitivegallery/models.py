@@ -53,7 +53,7 @@ class Image(models.Model):
         if path is None:
             path = self.path
         ext = os.path.splitext(path)[1]
-        return ext in VIDEO_EXTS
+        return ext.lower() in VIDEO_EXTS
 
     def process(self):
         if self.status > 0:
