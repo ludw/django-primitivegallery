@@ -28,9 +28,9 @@ With pip install Django, Pillow and primitivegallery::
 
   sudo pip install django pillow django-primitivegallery
 
-With apt-get install imagemagick and jhead::
+With apt-get install imagemagick, jhead and ffmpeg::
 
-  sudo apt-get install imagemagick jhead
+  sudo apt-get install imagemagick jhead ffmpeg
 
 
 Create a project

@@ -25,6 +25,7 @@ a.folder { text-decoration: none; color: #fff; }
 
 #slideshow { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #000; text-align: center; vertical-align: center; }
 #slideshow img { max-width: 100%; max-height: 100%; }
+#slideshow #videooverlay { position: absolute; top: 20px; left: 20px; padding: 10px; background: #000; opacity: 0.7; color: #fff; font-size: 16px;}
 #slideshownav { position: absolute; bottom: 0; left: 0; height: 40px; background: #000; border-top: 1px solid #444; border-right: 1px solid #444; padding-right: 10px; }
 #slideshownav a { display: inline-block; width: 30px; height: 30px; text-align: center; margin: 8px 0 0 7px; }
 #slideshownav a img { vertical-align: middle; }

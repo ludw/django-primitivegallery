@@ -8,6 +8,9 @@ from PIL.ExifTags import TAGS
 from PIL.Image import open
 from django.utils import timezone
 
+VIDEO_EXTS = ['.mp4', '.webm', '.mov', '.ogv', '.flv', '.avi', '.3gp', '.mpg',
+              '.qt', '.3g2', '.wmv', '.m4v']
+
 
 class Image(models.Model):
     path = models.CharField(max_length=500, unique=True)
@@ -17,7 +20,13 @@ class Image(models.Model):
 
     def name(self, size=None):
         if size:
-            return '.' + size + '_' + basename(self.path)
+            ret = '.' + size + '_' + basename(self.path)
+
+            if self.is_video():
+                ret += '.jpg'
+
+            return ret
+
         return basename(self.path)
 
     def dir(self):
@@ -39,6 +48,10 @@ class Image(models.Model):
     def local(self, size=''):
         file = self.name(size)
         return join(settings.PRIMITIVE_GALLERY['IMAGE_ROOT'], self.dir(), file)
+
+    def is_video(self):
+        ext = os.path.splitext(self.path)[1]
+        return ext in VIDEO_EXTS
 
     def process(self):
         if self.status > 0:
@@ -78,6 +91,9 @@ class Image(models.Model):
         return subprocess.call(["jhead", '-autorot', infile])
 
     def _create_thumbnail(self, infile, outfile, size):
+        if self.is_video():
+            return self._create_videothumb(infile, outfile, size)
+
         return subprocess.call([
             'convert', infile,
             '-thumbnail', size + '^',
@@ -87,10 +103,24 @@ class Image(models.Model):
         ])
 
     def _create_resized(self, infile, outfile, size):
+        if self.is_video():
+            return self._create_videothumb(infile, outfile, size)
+
         return subprocess.call([
             'convert', infile,
             '-resize', size,
             '-unsharp', '1.0x1.0+0.5+0.10',
+            outfile
+        ])
+
+    def _create_videothumb(self, infile, outfile, size):
+        return subprocess.call([
+            'ffmpeg',
+            '-i', infile,
+            '-vframes', '1',
+            '-an',
+            '-s', size,
+            '-ss', '1',
             outfile
         ])
 

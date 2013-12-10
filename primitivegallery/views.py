@@ -75,7 +75,7 @@ def api_list(request, size='thumbnails', subfolder=''):
         index = int(request.GET.get('index'))
     except:
         index = 0
-    
+
     size = request.GET.get('size', '')
     if not size in ['medium', 'small']:
         size = ''

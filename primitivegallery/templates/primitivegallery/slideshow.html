@@ -24,12 +24,20 @@ function loadimage() {
         'success': function(data) {
             var anchor = $('<a></a>');
             var img = $('<img />');
-            anchor.attr('href', data.image);
-            img.attr('src', data.image);
+            var videooverlay = $('<div id="videooverlay">Video. Click to view / download.</div>');
+            anchor.attr('href', data.fullsize);
+            if(data.is_video) {
+                img.attr('src', data.medium);
+                videooverlay.show();
+            } else {
+                img.attr('src', data.image);
+                videooverlay.hide();
+            }
             anchor.append(img);
+            anchor.append(videooverlay);
             $('#slideshow').html(anchor);
-            
-			$('#cache').html('');
+
+            $('#cache').html('');
             if(random == false) {
                 $.each(data.images, function(index, src) {
                     var img = $('<img />');
